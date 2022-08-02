@@ -66,8 +66,7 @@ def getArguments():
 	if len(sys.argv[1:])==0:
 	    parser.print_help()
 	    parser.exit()
-	args = parser.parse_known_args()[0]
-	return args
+	return parser.parse_known_args()[0]
 
 def sendAppleScript(command):
 	'''
@@ -83,12 +82,12 @@ def tellProgressScreen(command, setting):
 	# if we've been passed a boolean, make it a string to be passto osa_script
 	if isinstance(setting, bool):
 	 	setting = "True"
-	applescript = "set %s of every configuration to %s" % (command, setting)
+	applescript = f"set {command} of every configuration to {setting}"
 	sendAppleScript(applescript)
 
 def logMessage(message):
 	with open(jamf_log, 'a') as f:
-		f.write('ProgressScreen[]: %s' % message)
+		f.write(f'ProgressScreen[]: {message}')
 
 def errorHander(error, type):
 	'''
